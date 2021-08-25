@@ -1,0 +1,68 @@
+.App {
+  text-align: center;
+}
+
+.padClass {
+  padding: 1em;
+}
+
+.mainClass {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+}
+
+.fixedRowClass {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+}
+
+.rowClass {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.h1Tag {
+  text-transform: uppercase;
+  background: linear-gradient(to right, #3be5d1 0%, #b0e53b 100%);
+  background-clip: unset;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn, .addBtn, .cancelBtn, .delBtn, .editBtn, .markBtn {
+  font-weight: bold;
+  padding: 0.3em;
+  border-radius: 0.3em;
+}
+
+.addBtn {
+  background-color: #ddaaf6;
+}
+
+.delBtn {
+  background-color:#fa9c80;
+}
+
+.cancelBtn {
+  background-color:wheat;
+}
+
+.editBtn {
+  background-color: #c2f552;
+}
+
+.markBtn {
+  background-color: #87f587;
+}
+
+.inp {
+  padding: 0.3em;
+}
