@@ -6,6 +6,7 @@ export default function ShowTodo({ setTodos, todos }) {
   const [isEditEnabled, setIsEditEnabled] = useState({});
 
   const handleUpdateTodo = (todo, index) => {
+    if (updateValue[todo.id] === "") return;
     if (!isEditEnabled[todo.id]) {
       setIsEditEnabled({
         ...isEditEnabled,
@@ -49,6 +50,7 @@ export default function ShowTodo({ setTodos, todos }) {
                 )
               ) : (
                 <input
+                  className={styles.inp}
                   type="text"
                   id="update-todo"
                   value={updateValue[todo.id]}
@@ -77,7 +79,7 @@ export default function ShowTodo({ setTodos, todos }) {
             {isEditEnabled[todo.id] ? (
               <div className={styles.padClass}>
                 <button
-                className = {styles.cancelBtn}
+                  className={styles.cancelBtn}
                   onClick={() => {
                     setIsEditEnabled({
                       ...isEditEnabled,
@@ -92,20 +94,33 @@ export default function ShowTodo({ setTodos, todos }) {
               ""
             )}{" "}
             <div className={styles.padClass}>
-              <button
-              className = {styles.markBtn}
-                onClick={() => {
-                  const newTodos = [...todos];
-                  newTodos[index].done = !todo.done;
-                  setTodos(newTodos);
-                }}
-              >
-                {!todo.done ? "Mark as done" : "Mark as undone"}{" "}
-              </button>{" "}
-            </div>{" "}
+              {!todo.done ? (
+                <button
+                  className={styles.markBtn}
+                  onClick={() => {
+                    const newTodos = [...todos];
+                    newTodos[index].done = !todo.done;
+                    setTodos(newTodos);
+                  }}
+                >
+                  Mark as done
+                </button>
+              ) : (
+                <button
+                  className={styles.markUndoneBtn}
+                  onClick={() => {
+                    const newTodos = [...todos];
+                    newTodos[index].done = !todo.done;
+                    setTodos(newTodos);
+                  }}
+                >
+                  Mark as undone
+                </button>
+              )}
+            </div>
             <div className={styles.padClass}>
               <button
-              className = {styles.delBtn}
+                className={styles.delBtn}
                 onClick={() => {
                   let newTodos = todos.filter(({ id }) => id !== todo.id);
                   setTodos(newTodos);

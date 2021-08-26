@@ -1,12 +1,21 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import ShowTodo from "./ShowTodo";
+import NavBar from "./NavBar";
+import { Login, Register } from "./Auth";
 import { setCaretPosition, useLocalStorage } from "./Utils";
 import styles from "./App.module.css";
 
 function App() {
   const [todos, setTodos] = useLocalStorage("todos", []);
   const [inputVal, setInputVal] = useState("");
+  const [user] = useLocalStorage("user", { isLoggedIn: false });
 
   const handleAddTodo = () => {
     if (inputVal !== "") {
@@ -23,6 +32,8 @@ function App() {
 
   return (
     <div className={styles.mainClass}>
+      {!user.isLoggedIn ? <Redirect to="/login" /> : ""}
+      <NavBar />
       <h1 className={styles.h1Tag}>Simple Todo App</h1>
       <div className={styles.rowClass}>
         <div className={styles.padClass}>
@@ -44,7 +55,7 @@ function App() {
           ></input>
         </div>
         <div className={styles.padClass}>
-          <button class={styles.addBtn} onClick={handleAddTodo}>
+          <button className={styles.addBtn} onClick={handleAddTodo}>
             Add Todo
           </button>
         </div>
@@ -55,4 +66,28 @@ function App() {
   );
 }
 
-export default App;
+function router() {
+  return (
+    <Router>
+      <div>
+        <Switch>
+          <Route exact path="/">
+            <App />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route exact path="/register">
+            <Register />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
+}
+
+export default router;

@@ -1,0 +1,26 @@
+.mainClass {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.colClass {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+.inp {
+  padding: 0.6em;
+  border-radius: 0.3em;
+}
+
+.actBtn {
+  font-size: 1em;
+  font-weight: bold;
+  background-color: lightgreen;
+  padding: 0.3em;
+  border-radius: 0.3em;
+}

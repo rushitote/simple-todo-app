@@ -9,9 +9,42 @@
 .mainClass {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 2em;
+}
+
+.navBar {
+  display: flex;
+  flex-direction: row;
+  padding: 0.4em;
+  gap: 1em;
+}
+
+.NavBtn {
+  font-size: 1em;
+  font-weight: bold;
+  background-color: lightcoral;
+  padding: 0.3em;
+  border-radius: 0.3em;
+}
+
+.Nav0 {
+  text-align: left;
+}
+
+.NavNotLoggedIn {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.Nav1 {
+  flex: 1;
+  text-align: right;
+}
+
+.Nav2 {
+  text-align: right;
 }
 
 .fixedRowClass {
@@ -33,11 +66,18 @@
   text-transform: uppercase;
   background: linear-gradient(to right, #3be5d1 0%, #b0e53b 100%);
   background-clip: unset;
+  align-self: center;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.btn, .addBtn, .cancelBtn, .delBtn, .editBtn, .markBtn {
+.btn,
+.addBtn,
+.cancelBtn,
+.delBtn,
+.editBtn,
+.markBtn,
+.markUndoneBtn {
   font-weight: bold;
   padding: 0.3em;
   border-radius: 0.3em;
@@ -48,11 +88,11 @@
 }
 
 .delBtn {
-  background-color:#fa9c80;
+  background-color: #fa9c80;
 }
 
 .cancelBtn {
-  background-color:wheat;
+  background-color: wheat;
 }
 
 .editBtn {
@@ -61,6 +101,10 @@
 
 .markBtn {
   background-color: #87f587;
+}
+
+.markUndoneBtn {
+  background-color: lightgrey;
 }
 
 .inp {
