@@ -1,17 +1,35 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import NavBar from "./NavBar";
-import { useLocalStorage, setCaretPosition } from "./Utils";
+import { useLocalStorage, setCaretPosition, fetchURL } from "./Utils";
 import styles from "./Auth.module.css";
 
-function LoginComponent() {
-  const [email, setEmail] = useState("");
+function LoginComponent({ setTodos }) {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useLocalStorage("user", { isLoggedIn: false });
 
-  const handleLogin = () => {
-    setUser({
-      isLoggedIn: true,
+  const handleLogin = async () => {
+    let data = {
+      username: username,
+      password: password,
+    };
+    fetchURL(data, "/login").then((res) => {
+      if (!res.ok) {
+        setUsername("");
+        setPassword("");
+        alert(res.body.err);
+        return;
+      }
+      fetchURL({}, "/get").then((response) => {
+        response.json().then((json) => {
+          window.localStorage.setItem("todos", json.todos);
+          setTodos(JSON.parse(json.todos));
+        });
+        setUser({
+          isLoggedIn: true,
+        });
+      });
     });
   };
 
@@ -22,15 +40,15 @@ function LoginComponent() {
       <input
         className={styles.inp}
         autoFocus
-        type="email"
-        placeholder="Your email"
+        type="text"
+        placeholder="Your username"
         id="email-input"
-        value={email}
+        value={username}
         onChange={(e) => {
-          setEmail(e.target.value);
+          setUsername(e.target.value);
         }}
         onKeyPress={(e) => {
-          if (e.key === "Enter" && email !== "") {
+          if (e.key === "Enter" && username !== "") {
             setCaretPosition("password-input", 0);
           }
         }}
@@ -61,13 +79,22 @@ function LoginComponent() {
 }
 
 function RegisterComponent() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useLocalStorage("user", { isLoggedIn: false });
 
   const handleRegister = () => {
-    setUser({
-      isLoggedIn: true,
+    let data = {
+      username: username,
+      password: password,
+    };
+    fetchURL(data, "/create").then((res) => {
+      if (!res.ok) {
+        setUsername("");
+        setPassword("");
+        alert(res.body.err);
+        return;
+      }
+      <Redirect to="/login" />;
     });
   };
 
@@ -78,15 +105,15 @@ function RegisterComponent() {
       <input
         className={styles.inp}
         autoFocus
-        type="email"
-        placeholder="Your email"
+        type="text"
+        placeholder="Your username"
         id="email-input"
-        value={email}
+        value={username}
         onChange={(e) => {
-          setEmail(e.target.value);
+          setUsername(e.target.value);
         }}
         onKeyPress={(e) => {
-          if (e.key === "Enter" && email !== "") {
+          if (e.key === "Enter" && username !== "") {
             setCaretPosition("password-input", 0);
           }
         }}
@@ -111,16 +138,15 @@ function RegisterComponent() {
       <button className={styles.actBtn} onClick={handleRegister}>
         Register
       </button>
-      {user.isLoggedIn ? <Redirect to="/" /> : ""}
     </div>
   );
 }
 
-export function Login() {
+export function Login({ setTodos }) {
   return (
     <div className={styles.mainClass}>
       <NavBar />
-      <LoginComponent />
+      <LoginComponent setTodos={setTodos} />
     </div>
   );
 }

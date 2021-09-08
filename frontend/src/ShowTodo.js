@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { fetchURL } from "./Utils";
 import styles from "./App.module.css";
 
 export default function ShowTodo({ setTodos, todos }) {
@@ -20,6 +21,7 @@ export default function ShowTodo({ setTodos, todos }) {
       const newTodos = [...todos];
       newTodos[index].value = updateValue[todo.id];
       setTodos(newTodos);
+      fetchURL({ todos: JSON.stringify(newTodos) }, "/update");
       setIsEditEnabled({
         ...isEditEnabled,
         [todo.id]: false,
@@ -101,6 +103,7 @@ export default function ShowTodo({ setTodos, todos }) {
                     const newTodos = [...todos];
                     newTodos[index].done = !todo.done;
                     setTodos(newTodos);
+                    fetchURL({ todos: JSON.stringify(newTodos) }, "/update");
                   }}
                 >
                   Mark as done
@@ -112,6 +115,7 @@ export default function ShowTodo({ setTodos, todos }) {
                     const newTodos = [...todos];
                     newTodos[index].done = !todo.done;
                     setTodos(newTodos);
+                    fetchURL({ todos: JSON.stringify(newTodos) }, "/update");
                   }}
                 >
                   Mark as undone
@@ -124,6 +128,7 @@ export default function ShowTodo({ setTodos, todos }) {
                 onClick={() => {
                   let newTodos = todos.filter(({ id }) => id !== todo.id);
                   setTodos(newTodos);
+                  fetchURL({ todos: JSON.stringify(newTodos) }, "/update");
                 }}
               >
                 Delete Todo{" "}

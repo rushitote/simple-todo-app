@@ -1,16 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useLocalStorage } from "./Utils";
+import { useLocalStorage, fetchURL } from "./Utils";
 import styles from "./App.module.css";
 
-export default function NavBar() {
+export default function NavBar({ setTodos }) {
   const [user, setUser] = useLocalStorage("user", { isLoggedIn: false });
 
   const handleLogOut = () => {
-    setUser({
-      isLoggedIn: false
-    })
-  }
+    fetchURL({}, "/logout").then(() => {
+      window.localStorage.setItem("todos", JSON.stringify([]));
+      setUser({
+        isLoggedIn: false,
+      });
+      setTodos([]);
+    });
+  };
 
   return (
     <div className={styles.navBar}>
@@ -35,7 +39,9 @@ export default function NavBar() {
       ) : (
         <div className={styles.Nav1}>
           <Link to="/login">
-            <button className={styles.NavBtn} onClick= {handleLogOut}>Log Out</button>
+            <button className={styles.NavBtn} onClick={handleLogOut}>
+              Log Out
+            </button>
           </Link>
         </div>
       )}

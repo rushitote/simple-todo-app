@@ -50,3 +50,16 @@ export function useLocalStorage(key, initialValue) {
   };
   return [storedValue, setValue];
 }
+
+// Custom fetch function to communicate with the backend
+export async function fetchURL(data, url) {
+  return fetch("http://localhost:3001" + url, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(data),
+  });
+}
